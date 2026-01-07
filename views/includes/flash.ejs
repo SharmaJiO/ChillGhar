@@ -1,0 +1,36 @@
+<% if (success && success.length) { %>
+  <div 
+    class="alert alert-success alert-dismissible fade show shadow-lg border-0 rounded-3 col-6 offset-3 px-4 py-3 d-flex align-items-center" 
+    role="alert"
+  >
+    <i class="fa-solid fa-circle-check me-2 fs-5"></i>
+    <div class="flex-grow-1">
+      <strong>Success!</strong> <%= success[0] %>
+    </div>
+    <button 
+      type="button" 
+      class="btn-close" 
+      data-bs-dismiss="alert" 
+      aria-label="Close"
+    ></button>
+  </div>
+<% } %>
+
+<% if (error && error.length) { %>
+  <div 
+    class="alert alert-danger alert-dismissible fade show shadow-lg border-0 rounded-3 col-6 offset-3 px-4 py-3 d-flex align-items-center" 
+    role="alert"
+  >
+    <i class="fa-solid fa-circle-check me-2 fs-5"></i>
+    <div class="flex-grow-1">
+      <strong>OOps!</strong> <%= error[0] %>
+    </div>
+    <button 
+      type="button" 
+      class="btn-close" 
+      data-bs-dismiss="alert" 
+      aria-label="Close"
+    ></button>
+  </div>
+<% } %>
+ 
