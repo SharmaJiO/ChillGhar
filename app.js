@@ -1,4 +1,4 @@
-if(process.env.NODE_ENV !="production"){require('dotenv').config()};
+if (process.env.NODE_ENV != "production") { require('dotenv').config() };
 
 
 
@@ -36,26 +36,25 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "/public")));
 
-// async function main() {
-//   await mongoose.connect("mongodb://127.0.0.1:27017/Airbnb");
-// }
-
+// Changed back to local MongoDB since you are checking mongosh locally!
+//const dbUrl = "mongodb://127.0.0.1:27017/Airbnb";
 const dbUrl = process.env.ATLASDB_URL;
+
 async function main() {
   await mongoose.connect(dbUrl);
 }
 main().catch(err => console.log(err));
 
 const store = MongoStore.create({
-  mongoUrl:dbUrl,
-  crypto:{
-    secret:process.env.SECRET_CODE
+  mongoUrl: dbUrl,
+  crypto: {
+    secret: process.env.SECRET_CODE
   },
-  touchAfter:24*3600,
+  touchAfter: 24 * 3600,
 });
 
-store.on("error",()=>{
-  console.log("Error  in Mongo session store",err)
+store.on("error", () => {
+  console.log("Error  in Mongo session store", err)
 })
 
 const sessionOption = {
@@ -79,24 +78,28 @@ app.use(flash())
 
 app.use(passport.initialize());//middleware to initialize passport
 app.use(passport.session());
-passport.use(new LocalStrategy(User.authenticate()) ) //use static authenticate method of model localStrategy
+passport.use(new LocalStrategy(User.authenticate())) //use static authenticate method of model localStrategy
 
 // use static serialize and deserialize of model for passport session support
 passport.serializeUser(User.serializeUser()); // to store information related to user in session
 passport.deserializeUser(User.deserializeUser());// to unstore information related to user  after the session ends.
 
 
-app.use((req,res,next)=>{
+app.use((req, res, next) => {
   res.locals.success = req.flash("success");
-  res.locals.error=req.flash("error");
+  res.locals.error = req.flash("error");
   res.locals.currUser = req.user
   next();
 })
 
 
-app.use("/listings",listingsRouter)
-app.use("/listings/:id/reviews",reviewsRouter)
-app.use("/",userRouter);
+app.use("/listings", listingsRouter)
+app.use("/listings/:id/reviews", reviewsRouter)
+app.use("/", userRouter);
+
+app.get("/", (req, res) => {
+  res.redirect("/listings");
+});
 
 // 404 handler (regex for Express 5)
 app.all(/.*/, (req, res, next) => {
@@ -110,7 +113,7 @@ app.use((err, req, res, next) => {
     err.message = "Invalid input. Please check your form fields.";
   }
   const { statusCode = 500, message = "Something went wrong!" } = err;
-  res.status(statusCode).render("error.ejs",{err})
+  res.status(statusCode).render("error.ejs", { err })
   //res.status(statusCode).send(message);
 });
 

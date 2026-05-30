@@ -46,7 +46,7 @@ const isLoggedIn = (req,res,next)=>{
 }
 
 const saveRedirecturl = (req,res,next)=>{
-    if(req.session.redirectUrl){
+    if(req.session.redirectUrl){ 
       res.locals.redirectUrl = req.session.redirectUrl;
    }
     next();

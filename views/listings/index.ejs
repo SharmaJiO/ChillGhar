@@ -1,194 +1,194 @@
 <% layout("/layouts/boilerplate") %>
 
-<style>
-  /* ✅ General Filters Layout */
-  #filters {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-around;
-    gap: 1.5rem;
-    margin-top: 1rem;
-    padding: 1rem 1rem;
-    background: #fff;
-    border-radius: 1rem;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-  }
-
-  /* ✅ Filter Style */
-  .filter {
-    text-align: center;
-    transition: all 0.25s ease;
-    color: #222;
-  }
-
-  /* ✅ Make entire filter clickable */
-  .filter a {
-    display: inline-block;
-    text-decoration: none;
-    color: inherit;              /* no default blue color */
-  }
-
-  .filter a:visited,
-  .filter a:hover,
-  .filter a:active {
-    color: inherit;              /* consistent color on all states */
-    text-decoration: none;
-  }
-
-  /* ✅ Icon style */
-  .filter i {
-    font-size: 1.8rem;
-    padding: 1rem;
-    border-radius: 1rem;
-    background: #f8f9fa;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-    transition: all 0.3s ease;
-    color: gray;
-  }
-
-  .filter:hover i {
-    background: #ff4d6d;
-    color: white;
-    transform: scale(1.1);
-    box-shadow: 0 4px 12px rgba(255,77,109,0.4);
-  }
-
-  /* ✅ Label text */
-  .filter p {
-    margin-top: 0.5rem;
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: #444;
-  }
-
-  /* ✅ Tax Toggle Style */
-  .tax-toggle {
-    display: flex;
-    align-items: center;
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 1rem;
-    padding: 0.5rem 1rem;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-  }
-
-  .tax-toggle:hover {
-    border-color: #ff4d6d;
-  }
-
-  .tax-toggle label {
-    font-weight: 500;
-    font-size: 0.9rem;
-    margin-left: 0.4rem;
-    color: #333;
-  }
-
-  .tax-info{
-    display: none;
-  }
-
-  /* ✅ Responsive Filters */
-  @media (max-width: 768px) {
+  <style>
+    /* ✅ General Filters Layout */
     #filters {
-      gap: 1rem;
-      padding: 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-around;
+      gap: 1.5rem;
+      margin-top: 1rem;
+      padding: 1rem 1rem;
+      background: #fff;
+      border-radius: 1rem;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
     }
 
+    /* ✅ Filter Style */
+    .filter {
+      text-align: center;
+      transition: all 0.25s ease;
+      color: #222;
+    }
+
+    /* ✅ Make entire filter clickable */
+    .filter a {
+      display: inline-block;
+      text-decoration: none;
+      color: inherit;
+      /* no default blue color */
+    }
+
+    .filter a:visited,
+    .filter a:hover,
+    .filter a:active {
+      color: inherit;
+      /* consistent color on all states */
+      text-decoration: none;
+    }
+
+    /* ✅ Icon style */
     .filter i {
-      font-size: 1.3rem;
-      padding: 0.7rem;
+      font-size: 1.8rem;
+      padding: 1rem;
+      border-radius: 1rem;
+      background: #f8f9fa;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+      color: gray;
     }
 
+    .filter:hover i {
+      background: #ff4d6d;
+      color: white;
+      transform: scale(1.1);
+      box-shadow: 0 4px 12px rgba(255, 77, 109, 0.4);
+    }
+
+    /* ✅ Label text */
     .filter p {
-      font-size: 0.7rem;
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #444;
     }
-  }
 
-  /* ✅ Listing Cards */
-  .listing-card {
-    transition: transform 0.2s ease-in-out;
-  }
-
-  .listing-card:hover {
-    transform: scale(1.02);
-  }
-
-  .title {
-    font-size: 1rem;
-  }
-
-  .price {
-    color: #444;
-    font-size: 0.9rem;
-  }
-
-  @media (max-width: 576px) {
-    .listing-card img {
-      height: 15rem;
+    /* ✅ Tax Toggle Style */
+    .tax-toggle {
+      display: flex;
+      align-items: center;
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 1rem;
+      padding: 0.5rem 1rem;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
     }
-  }
-</style>
+
+    .tax-toggle:hover {
+      border-color: #ff4d6d;
+    }
+
+    .tax-toggle label {
+      font-weight: 500;
+      font-size: 0.9rem;
+      margin-left: 0.4rem;
+      color: #333;
+    }
+
+    .tax-info {
+      display: none;
+    }
+
+    /* ✅ Responsive Filters */
+    @media (max-width: 768px) {
+      #filters {
+        gap: 1rem;
+        padding: 1rem;
+      }
+
+      .filter i {
+        font-size: 1.3rem;
+        padding: 0.7rem;
+      }
+
+      .filter p {
+        font-size: 0.7rem;
+      }
+    }
+
+    /* ✅ Listing Cards */
+    .listing-card {
+      transition: transform 0.2s ease-in-out;
+    }
+
+    .listing-card:hover {
+      transform: scale(1.02);
+    }
+
+    .title {
+      font-size: 1rem;
+    }
+
+    .price {
+      color: #444;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 576px) {
+      .listing-card img {
+        height: 15rem;
+      }
+    }
+  </style>
 
 
-<!-- ✅ Filter Section -->
-<div id="filters">
-  <% const iconMap = {
-      "Club": "fa-martini-glass-citrus",
-      "Cafe": "fa-mug-hot",
-      "Live Music": "fa-music",
-      "Rooftop": "fa-city",
-      "Gaming Zone": "fa-gamepad",
-      "Nature": "fa-leaf",
-      "Event": "fa-masks-theater"
-  }; %>
+  <!-- ✅ Filter Section -->
+  <div id="filters">
+    <% const iconMap={ "Club" : "fa-martini-glass-citrus" , "Cafe" : "fa-mug-hot" , "Live Music" : "fa-music"
+      , "Rooftop" : "fa-city" , "Gaming Zone" : "fa-gamepad" , "Nature" : "fa-leaf" , "Event" : "fa-masks-theater" }; %>
 
-  <% for (let category of categories) { %>
-    <div class="filter">
-      <a href="/listings/cate/<%= category %>">
-        <div><i class="fa-solid <%= iconMap[category] || 'fa-star' %>"></i></div>
-        <p><%= category %></p>
-      </a>
-    </div>
-  <% } %>
+      <% for (let category of categories) { %>
+        <div class="filter">
+          <a href="/listings/cate/<%= category %>">
+            <div><i class="fa-solid <%= iconMap[category] || 'fa-star' %>"></i></div>
+            <p>
+              <%= category %>
+            </p>
+          </a>
+        </div>
+        <% } %>
 
-  <div class="tax-toggle">
-    <div class="form-check-reverse form-switch">
-      <input class="form-check-input" type="checkbox" id="switchCheckDefault">
-      <label class="form-check-label" for="switchCheckDefault">Show total after taxes</label>
-    </div>
-  </div>
-</div>
-
-<!-- ✅ Cards Section -->
-<div class="container mt-4">
-  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
-    <% for(let listing of allListings){ %>
-      <div class="col">
-        <a class="listing-link" href="/listings/<%= listing.id %>">
-          <div class="card listing-card h-100 shadow-sm">
-            <img src="<%= listing.image.url %>" class="card-img-top" alt="listing_image" style="height: 20rem; object-fit: cover;">
-            <div class="card-body">
-              <div class="title"><b><%= listing.title %></b></div>
-              <div class="price">
-                &#8377;<%= listing.price.toLocaleString("en-IN") %>/Table Booking
-                <i class="tax-info">&nbsp;+18% GST</i>
-              </div>
+          <div class="tax-toggle">
+            <div class="form-check-reverse form-switch">
+              <input class="form-check-input" type="checkbox" id="switchCheckDefault">
+              <label class="form-check-label" for="switchCheckDefault">Show total after taxes</label>
             </div>
           </div>
-        </a>
-      </div>
-    <% } %>
   </div>
-</div>
 
-<script>
-  // ✅ Tax toggle
-  let taxSwitch = document.getElementById("switchCheckDefault");
-  taxSwitch.addEventListener("click", () => {
-    let taxInfo = document.getElementsByClassName("tax-info");
-    for (info of taxInfo) {
-      info.style.display = (info.style.display !== "inline") ? "inline" : "none";
-    }
-  });
-</script>
+  <!-- ✅ Cards Section -->
+  <div class="container mt-4">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+      <% for(let listing of allListings){ %>
+        <div class="col">
+          <a class="listing-link" href="/listings/<%= listing.id %>">
+            <div class="card listing-card h-100 shadow-sm">
+              <img src="<%= listing.image.url %>" class="card-img-top" alt="listing_image"
+                style="height: 20rem; object-fit: cover;">
+              <div class="card-body">
+                <div class="title"><b>
+                    <%= listing.title %>
+                  </b></div>
+                <div class="price">
+                  &#8377;<%= listing.price.toLocaleString("en-IN") %>/Table Booking
+                    <i class="tax-info">&nbsp;+18% GST</i>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+        <% } %>
+    </div>
+  </div>
+
+  <script>
+    // ✅ Tax toggle
+    let taxSwitch = document.getElementById("switchCheckDefault");
+    taxSwitch.addEventListener("click", () => {
+      let taxInfo = document.getElementsByClassName("tax-info");
+      for (info of taxInfo) {
+        info.style.display = (info.style.display !== "inline") ? "inline" : "none";
+      }
+    });
+  </script>

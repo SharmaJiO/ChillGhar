@@ -18,7 +18,7 @@
 />  
         <div class="card-body">
           <p class="card-text">
-            <strong>Owned by:</strong><%= listing.owner.username %>
+            <strong>Owned by:</strong><%= listing.owner ? listing.owner.username : "Unknown User" %>
           </p>
           <p class="card-text">
             <%= listing.description %>
@@ -31,7 +31,7 @@
     </div>
 
     <!-- Buttons -->
-     <% if( currUser && currUser._id.equals(listing.owner._id)){ %>
+     <% if( currUser && listing.owner && currUser._id.equals(listing.owner._id)){ %>
     <div class="col-md-8 d-flex justify-content-between mb-4">
       <a href="/listings/<%= listing._id %>/edit" class="btn btn-warning px-4">Edit</a>
       <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE">
