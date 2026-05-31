@@ -1,42 +1,45 @@
-require('dotenv').config({ path: '../.env' });
+require("dotenv").config({ path: "../.env" });
+
 const mongoose = require("mongoose");
-const initdata = require("./data.js");
 const Listing = require("../models/listing.js");
 const User = require("../models/user.js");
+const { listings, users } = require("./data.js");
 
-main().catch(err => console.log(err));
+const MONGO_URL = process.env.ATLASDB_URL;
+const COMMON_PASSWORD = "Test@1234";
 
-async function main() {
-  // Connect to local database where your mongosh user lives!
-  await mongoose.connect("mongodb://127.0.0.1:27017/Airbnb");
-  console.log("Connected to DB, initializing data...");
-  await initDB();
-  console.log("Done.");
-  process.exit(0);
-}
+async function seed() {
+  await mongoose.connect(MONGO_URL);
+  console.log("✅ Connected to MongoDB");
 
-const initDB = async () => {
+  await User.deleteMany({});
   await Listing.deleteMany({});
+  console.log("🗑️  Cleared existing data");
 
-  // Using the Anjani ID that exists in your local mongosh
-  const id = '6903ce07a876d0284ac21a98';
-
-  // Find the owner locally to confirm!
-  const user = await User.findById(id);
-
-  if (!user) {
-    console.log("ERROR: User not found! Please check mongosh again.");
-    return;
+  // Create users
+  const createdUsers = [];
+  for (const u of users) {
+    const user = new User({ username: u.username, email: u.email });
+    const registered = await User.register(user, COMMON_PASSWORD);
+    createdUsers.push(registered);
+    console.log(`👤 Created user: ${u.username}`);
   }
 
-  const updatedData = initdata.data.map((listing) => ({
-    ...listing,
+  // Create listings — assign owner in round-robin
+  for (let i = 0; i < listings.length; i++) {
+    const owner = createdUsers[i % createdUsers.length];
+    const listing = new Listing({ ...listings[i], owner: owner._id });
+    await listing.save();
+    console.log(`🏠 Created: ${listing.title}`);
+  }
 
-    owner: id,
-  }));
-
-  await Listing.insertMany(updatedData);
-  console.log("data was initialized");
+  console.log("\n✅ Seeding complete!");
+  console.log(`📊 ${createdUsers.length} users | ${listings.length} listings`);
+  console.log(`🔑 Password for all users: ${COMMON_PASSWORD}`);
+  await mongoose.disconnect();
 }
 
-initDB();
+seed().catch((err) => {
+  console.error("❌ Seed error:", err);
+  mongoose.disconnect();
+});
