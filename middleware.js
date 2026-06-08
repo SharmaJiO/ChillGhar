@@ -55,20 +55,46 @@ const saveRedirecturl = (req,res,next)=>{
 const isowner = async(req,res,next)=>{
     const { id } = req.params;
       let listing = await Listing.findById(id);
-if(!listing.owner._id.equals(res.locals.currUser._id)){
-    req.flash("error","You are not the owner of this listing");
-   return  res.redirect('/listings/${id}');
+ if (!listing) {
+    req.flash("error", "Listing does not exist");
+    return res.redirect("/listings");
+  }
+
+  if (!listing.owner) {
+    req.flash("error", "This listing has no owner");
+    return res.redirect(`/listings/${id}`);
+  }
+
+  if (!res.locals.currUser || !listing.owner.equals(res.locals.currUser._id)
+  ) {
+    req.flash("error", "You are not the owner of this listing");
+    return res.redirect(`/listings/${id}`);
   }
   next();
 };
 
-const isReviewAuthor = async(req,res,next)=>{
-   let {id,reviewId}=req.params;
-      let review = await Review.findById(reviewId);
-if(!review.author.equals(res.locals.currUser._id)){
-    req.flash("error","This review wasn't created by you");
-   return res.redirect(`/listings/${id}`);
+const isReviewAuthor = async (req, res, next) => {
+  const { id, reviewId } = req.params;
+  const review = await Review.findById(reviewId);
+
+  if (!review) {
+    req.flash("error", "Review does not exist");
+    return res.redirect(`/listings/${id}`);
   }
+
+  if (!review.author) {
+    req.flash("error", "This review has no author");
+    return res.redirect(`/listings/${id}`);
+  }
+
+  if (
+    !res.locals.currUser ||
+    !review.author.equals(res.locals.currUser._id)
+  ) {
+    req.flash("error", "This review wasn't created by you");
+    return res.redirect(`/listings/${id}`);
+  }
+
   next();
 };
 

@@ -129,3 +129,57 @@ color: #222222;
     padding-left:0 ;
     padding-right:0 ;
 }
+
+
+
+/* Guest listing lock */
+.listing-access-wrapper {
+    position: relative;
+}
+
+.blurred-listings {
+    filter: blur(7px);
+    pointer-events: none;
+    user-select: none;
+}
+
+.login-lock-card {
+    position: fixed;
+    top: 55%;
+    left: 50%;
+    z-index: 20;
+    width: min(90%, 28rem);
+    padding: 2rem;
+    border-radius: 1.25rem;
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.18);
+    text-align: center;
+    transform: translate(-50%, -50%);
+}
+
+.login-lock-card i {
+    color: #fe424d;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.login-lock-card h2 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    margin-bottom: 0.75rem;
+}
+
+.login-lock-card p {
+    color: #555;
+    margin-bottom: 1.5rem;
+}
+
+.login-lock-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.login-lock-actions .btn {
+    min-width: 7rem;
+}

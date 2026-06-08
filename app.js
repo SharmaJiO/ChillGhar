@@ -4,6 +4,16 @@ if (process.env.NODE_ENV != "production") { require('dotenv').config() };
 
 const express = require("express");
 const app = express();
+
+
+
+app.locals.currUser = null;
+app.locals.success = [];
+app.locals.error = [];
+
+
+
+
 const mongoose = require("mongoose");
 const path = require("path");
 const methodOverride = require("method-override");
@@ -39,11 +49,23 @@ app.use(express.static(path.join(__dirname, "/public")));
 // Changed back to local MongoDB since you are checking mongosh locally!
 //const dbUrl = "mongodb://127.0.0.1:27017/Airbnb";
 const dbUrl = process.env.ATLASDB_URL;
-
+const port = process.env.PORT || 3000;
 async function main() {
   await mongoose.connect(dbUrl);
+  console.log("Connected to MongoDB");
 }
-main().catch(err => console.log(err));
+
+main()
+  .then(() => {
+    if (require.main === module) {
+      app.listen(port, () => {
+        console.log(`Your server is listening on port ${port}`);
+      });
+    }
+  })
+  .catch((err) => {
+    console.log("MongoDB connection error:", err);
+  });
 
 const store = MongoStore.create({
   mongoUrl: dbUrl,
@@ -53,7 +75,7 @@ const store = MongoStore.create({
   touchAfter: 24 * 3600,
 });
 
-store.on("error", () => {
+store.on("error", (err) => {
   console.log("Error  in Mongo session store", err)
 })
 
@@ -120,8 +142,6 @@ app.use((err, req, res, next) => {
 // app.listen(8080, () => {
 //   console.log("Your server is listening on port 8080");
 // });
-const port = process.env.PORT || 8080;
 
-app.listen(port, () => {
-  console.log(`Your server is listening on port ${port}`);
-});
+
+module.exports = app;

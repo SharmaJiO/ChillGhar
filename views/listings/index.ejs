@@ -133,62 +133,85 @@
   </style>
 
 
-  <!-- ✅ Filter Section -->
-  <div id="filters">
-    <% const iconMap={ "Club" : "fa-martini-glass-citrus" , "Cafe" : "fa-mug-hot" , "Live Music" : "fa-music"
-      , "Rooftop" : "fa-city" , "Gaming Zone" : "fa-gamepad" , "Nature" : "fa-leaf" , "Event" : "fa-masks-theater" }; %>
+  <% const isGuest = typeof currUser === "undefined" || !currUser; %>
+
+<div class="listing-access-wrapper">
+  <% if (isGuest) { %>
+    <div class="login-lock-card">
+      <i class="fa-solid fa-lock"></i>
+      <h2>Sign in to explore ChillGhar</h2>
+      <p>Please login or create an account to view listings, prices, and reviews.</p>
+
+      <div class="login-lock-actions">
+        <a href="/login" class="btn btn-dark">Log In</a>
+        <a href="/signup" class="btn add-btn">Sign Up</a>
+      </div>
+    </div>
+  <% } %>
+
+  <div class="<%= isGuest ? 'blurred-listings' : '' %>">
+    <!-- ✅ Filter Section -->
+    <div id="filters">
+      <% const iconMap={ "Club" : "fa-martini-glass-citrus" , "Cafe" : "fa-mug-hot" , "Live Music" : "fa-music"
+        , "Rooftop" : "fa-city" , "Gaming Zone" : "fa-gamepad" , "Nature" : "fa-leaf" , "Event" : "fa-masks-theater" }; %>
 
       <% for (let category of categories) { %>
         <div class="filter">
-          <a href="/listings/cate/<%= category %>">
+          <a href="<%= isGuest ? '/login' : '/listings/cate/' + category %>">
             <div><i class="fa-solid <%= iconMap[category] || 'fa-star' %>"></i></div>
-            <p>
-              <%= category %>
-            </p>
+            <p><%= category %></p>
           </a>
         </div>
-        <% } %>
+      <% } %>
 
-          <div class="tax-toggle">
-            <div class="form-check-reverse form-switch">
-              <input class="form-check-input" type="checkbox" id="switchCheckDefault">
-              <label class="form-check-label" for="switchCheckDefault">Show total after taxes</label>
-            </div>
-          </div>
-  </div>
+      <div class="tax-toggle">
+        <div class="form-check-reverse form-switch">
+          <input class="form-check-input" type="checkbox" id="switchCheckDefault">
+          <label class="form-check-label" for="switchCheckDefault">Show total after taxes</label>
+        </div>
+      </div>
+    </div>
 
-  <!-- ✅ Cards Section -->
-  <div class="container mt-4">
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
-      <% for(let listing of allListings){ %>
-        <div class="col">
-          <a class="listing-link" href="/listings/<%= listing.id %>">
-            <div class="card listing-card h-100 shadow-sm">
-              <img src="<%= listing.image.url %>" class="card-img-top" alt="listing_image"
-                style="height: 20rem; object-fit: cover;">
-              <div class="card-body">
-                <div class="title"><b>
-                    <%= listing.title %>
-                  </b></div>
-                <div class="price">
-                  &#8377;<%= listing.price.toLocaleString("en-IN") %>/Table Booking
+    <!-- ✅ Cards Section -->
+    <div class="container mt-4">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+        <% for(let listing of allListings){ %>
+          <div class="col">
+            <a class="listing-link" href="<%= isGuest ? '/login' : '/listings/' + listing.id %>">
+              <div class="card listing-card h-100 shadow-sm">
+                <img
+                  src="<%= listing.image.url %>"
+                  class="card-img-top"
+                  alt="listing_image"
+                  style="height: 20rem; object-fit: cover;"
+                >
+                <div class="card-body">
+                  <div class="title">
+                    <b><%= listing.title %></b>
+                  </div>
+                  <div class="price">
+                    &#8377;<%= listing.price.toLocaleString("en-IN") %>/Table Booking
                     <i class="tax-info">&nbsp;+18% GST</i>
+                  </div>
                 </div>
               </div>
-            </div>
-          </a>
-        </div>
+            </a>
+          </div>
         <% } %>
+      </div>
     </div>
   </div>
+</div>
 
-  <script>
-    // ✅ Tax toggle
-    let taxSwitch = document.getElementById("switchCheckDefault");
+<script>
+  // ✅ Tax toggle
+  let taxSwitch = document.getElementById("switchCheckDefault");
+  if (taxSwitch) {
     taxSwitch.addEventListener("click", () => {
       let taxInfo = document.getElementsByClassName("tax-info");
       for (info of taxInfo) {
         info.style.display = (info.style.display !== "inline") ? "inline" : "none";
       }
     });
-  </script>
+  }
+</script>
