@@ -7,6 +7,11 @@ const userSchema = new Schema ({
     email:{
         type:String,
         required:true,
+    },
+    identity:{
+        type:String,
+        enum:["host","guest"],
+        required:true,
     }
 })
 

@@ -1,9 +1,9 @@
 const users = [
-  { username: "arjun_sharma", email: "arjun@example.com" },
-  { username: "priya_mehta",  email: "priya@example.com" },
-  { username: "rohit_verma",  email: "rohit@example.com" },
-  { username: "sneha_gupta",  email: "sneha@example.com" },
-  { username: "karan_patel",  email: "karan@example.com" },
+  { username: "arjun_sharma", email: "arjun@example.com", identity: "host" },
+  { username: "priya_mehta",  email: "priya@example.com", identity: "guest" },
+  { username: "rohit_verma",  email: "rohit@example.com", identity: "host" },
+  { username: "sneha_gupta",  email: "sneha@example.com", identity: "guest" },
+  { username: "karan_patel",  email: "karan@example.com", identity: "host" },
 ];
 
 const listings = [

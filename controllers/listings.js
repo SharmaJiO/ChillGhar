@@ -1,6 +1,11 @@
 const Listing = require("../models/listing.js");
 const cloudConfig = require("../cloudConfig.js");
 
+module.exports.hostDashboard = async (req, res) => {
+  res.render("listings/")
+
+};
+
 module.exports.index = async (req, res) => {
   const allListings = await Listing.find({}).populate("owner");
   const categories = [
@@ -122,4 +127,18 @@ module.exports.search = async (req, res) => {
   const allListings = await Listing.find({ title: { $regex: title, $options: "i" } });
   console.log(allListings)
   res.render("listings/index.ejs", { allListings, categories })
+}
+
+module.exports.myListings = async (req, res) => {
+  const allListings = await Listing.find({ owner: req.user._id }).populate("owner");
+  const categories = [
+    "Club",
+    "Cafe",
+    "Live Music",
+    "Rooftop",
+    "Gaming Zone",
+    "Nature",
+    "Event"
+  ];
+  res.render("listings/index.ejs", { allListings, categories });
 }

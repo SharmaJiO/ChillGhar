@@ -28,10 +28,15 @@ module.exports.signupPost = async (req, res,next) => {
   module.exports.loginRender = (req, res) => {
   res.render("users/login.ejs");
 };
-  module.exports.loginpost =(req, res) => {
-    req.flash("success", "Welcome back to ChillGhar!");
-   res.redirect(res.locals.redirectUrl || "/listings");// redirect after successful login
-  } ;
+
+  module.exports.loginpost = (req, res) => {
+  req.flash("success", "Welcome back to ChillGhar!");
+  if (req.user.identity === "host") {
+    return res.redirect("listings/host");
+  } else {
+    return res.redirect(res.locals.redirectUrl || "/listings");
+  }
+};
 
   
   module.exports.logout =(req,res,next)=>{

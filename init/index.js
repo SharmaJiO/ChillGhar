@@ -19,7 +19,7 @@ async function seed() {
   // Create users
   const createdUsers = [];
   for (const u of users) {
-    const user = new User({ username: u.username, email: u.email });
+    const user = new User({ username: u.username, email: u.email, identity: u.identity });
     const registered = await User.register(user, COMMON_PASSWORD);
     createdUsers.push(registered);
     console.log(`👤 Created user: ${u.username}`);

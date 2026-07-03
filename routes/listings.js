@@ -20,7 +20,15 @@ router.get(("/search"),wrapAsync(listingController.search))
 // NEW ROUTE
 router.get("/new",isLoggedIn,listingController.renderNewForm );
 
+router.get("/host",isLoggedIn,wrapAsync(listingController.hostDashboard))
+
+
+router.get("/mylistings",isLoggedIn,wrapAsync(listingController.myListings))
+
 router.get("/cate/:categories",listingController.category)
+
+
+
 
 router.route("/:id")
 .get( wrapAsync(listingController.showRoute))// SHOW ROUTE
@@ -28,8 +36,11 @@ router.route("/:id")
 .delete(isLoggedIn, isowner,wrapAsync(listingController.deleteRoute));// DELETE ROUTE
 
 
+
 // EDIT ROUTE
 router.get("/:id/edit",isLoggedIn,isowner, wrapAsync(listingController.editRoute));
+
+router.get("/mylistings",isLoggedIn,wrapAsync(listingController.myListings))
 
 
 

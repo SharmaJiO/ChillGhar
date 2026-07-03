@@ -1,32 +1,31 @@
-
 <style>
-  .search-btn{
-    background-color:#fe424d ;
+  .search-btn {
+    background-color: #fe424d;
     color: white;
     border-radius: 25px;
-    padding: 0 1rem 0 1rem;
+    padding: 0 1rem;
   }
-
-  .search-btn:hover{
-    background-color:#fe424d ;
+  .search-btn:hover {
+    background-color: #fe424d;
     color: white;
   }
-
-  .search-inp{
+  .search-inp {
     border-radius: 25px;
-    padding: 0.5rem 3rem 0.5rem 3rem;
+    padding: 0.5rem 1.5rem;
     font-size: 1rem;
   }
 </style>
 
-
 <nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
   <div class="container-fluid px-4">
+
+    <!-- Brand -->
     <a class="navbar-brand d-flex align-items-center gap-2" href="/listings">
       <i class="fa-solid fa-house"></i>
       <span class="fw-bold">ChillGhar</span>
     </a>
 
+    <!-- Hamburger -->
     <button
       class="navbar-toggler"
       type="button"
@@ -40,34 +39,39 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav ms-3">
+
+      <!-- Left Links -->
+      <div class="navbar-nav me-3">
         <a class="nav-link" href="/listings">Explore</a>
-        <% if( currUser) { %>
+        <% if(currUser) { %>
           <a class="nav-link" href="/listings/new">New Listings</a>
         <% } %>
       </div>
 
-      <form action="/listings/search" method="GET" class="d-flex mx-auto navbar-search" role="search">
+      <!-- Center Search -->
+      <form action="/listings/search" method="GET" class="d-flex mx-auto" role="search">
         <input
           class="form-control me-2 search-inp"
           type="search"
           name="title"
-          placeholder="Search destinations"
+          placeholder="<%= currUser ? 'Search destinations' : 'Login to search' %>"
           aria-label="Search"
+          <%= currUser ? '' : 'disabled' %>
         />
-        <button class="btn search-btn" type="submit">Search</button>
+        <button class="btn search-btn" type="submit" <%= currUser ? '' : 'disabled' %>>Search</button>
       </form>
 
-      <div class="navbar-nav ms-auto align-items-md-center">
-        <!-- <% if(typeof currUser === "undefined" || !currUser) { %>
-          
-          <a class="nav-link" href="/login"><b>Log In</b></a>
-        <% } %> -->
-
-        <% if(typeof currUser !== "undefined" && currUser) { %>
+      <!-- Right Links -->
+      <div class="navbar-nav ms-3 align-items-md-center">
+        <% if(currUser) { %>
+          <a class="nav-link" href="/listings/mylistings"><b>My Listings</b></a>
           <a class="nav-link" href="/logout"><b>Log Out</b></a>
+        <% } else { %>
+          <a class="nav-link" href="/signup"><b>Sign Up</b></a>
+          <a class="nav-link" href="/login"><b>Log In</b></a>
         <% } %>
       </div>
+
     </div>
   </div>
 </nav>
